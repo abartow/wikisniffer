@@ -12,9 +12,9 @@ import random
 # before using this script to disable Chrome's cache.
 
 def open_webbrowser_thread_target(url):
-	subprocess.Popen(["osascript", "-e", 'quit app "Google Chrome"'], close_fds=True)
+	subprocess.Popen(["osascript", "-e", 'quit app "Firefox"'], close_fds=True)
 	time.sleep(3)
-	subprocess.Popen(["open", "-a", "Google Chrome", url], close_fds=True)
+	subprocess.Popen(["open", "-a", "Firefox", url], close_fds=True)
 
 def sniff_page(page_name):
 	page_url = "https://en.wikipedia.org/wiki/{}".format(page_name)
@@ -24,7 +24,7 @@ def sniff_page(page_name):
 	sniffer.sniff(15)
 	return sniffer.extract_conversations()
 
-pageviews = WikipediaPageviewAnalyzer("pageviews-20171031-110000")
+pageviews = WikipediaPageviewAnalyzer("pageviews-20171122-150000")
 
 repeat_times = 5
 pages_to_crawl = 1
@@ -34,7 +34,7 @@ for unused in range(repeat_times):
 	metadata_mapping = {}
 
 	pages_crawled = 0
-	i = 24
+	i = 0
 	while pages_crawled < pages_to_crawl:
 		page_title = pageviews.en_sorted[i][1]
 		print page_title, i
