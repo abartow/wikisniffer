@@ -13,10 +13,11 @@ with open("mapping", 'r') as mapping_file:
 print "Sniffing for Wikipedia Traffic..."
 
 sniffer = WikipediaMetadataSniffer()
-sniffer.sniff(5)
+sniffer.sniff(20)
 conversation = sniffer.extract_conversations()
 
 print "Extracted Metadata!"
+print "Metadata: {}".format(conversation)
 
 distances = []
 for title, connection_lengths in mapping.iteritems():
@@ -30,5 +31,6 @@ for title, connection_lengths in mapping.iteritems():
 	distances.append((title, distance))
 
 distances = sorted(distances, key=lambda x: x[1])
+
 
 print "I think you visited the article for {} (distance={})".format(distances[0][0], distances[0][1])

@@ -28,11 +28,11 @@ if __name__ == "__main__":
 	for page_view in pageviews.en_sorted:
 		accum_page_views += int(page_view[2])
 		pages += 1
-		if pages > 3000: break
+		if accum_page_views > (0.8 * pageviews.en_num_views): break
 
 	print len(pageviews.en_sorted)
 	print pageviews.en_sorted[0]
 	print pageviews.en_sorted[1]
 	print pageviews.en_sorted[2]
 	print "Total Pageviews: {}".format(pageviews.en_num_views)
-	print "Top 3000: {} {}".format(accum_page_views, float(accum_page_views) / pageviews.en_num_views)
+	print "Top 80%: {} {}".format(pages, float(accum_page_views) / pageviews.en_num_views)
