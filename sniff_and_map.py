@@ -13,7 +13,7 @@ with open("mapping", 'r') as mapping_file:
 print "Sniffing for Wikipedia Traffic..."
 
 sniffer = WikipediaMetadataSniffer()
-sniffer.sniff(20)
+sniffer.sniff(8)
 conversation = sniffer.extract_conversations()
 
 print "Extracted Metadata!"
