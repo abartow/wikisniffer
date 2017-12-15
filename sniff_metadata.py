@@ -1,6 +1,7 @@
 import pyshark
 import socket
 import logging
+from sets import Set
 
 # Attempts to resolve ip to its hostname. If ip cannot be resolved, returns ip.
 def resolve_ip(ip):
@@ -26,7 +27,7 @@ class WikipediaMetadataSniffer():
 
 
 	def extract_conversations(self):
-		tcp_packets = filter(lambda packet: 'TCP' in packet, self.captured_packets)
+		tcp_packets = filter(lambda packet: 'tcp' in packet, self.captured_packets)
 		#seen_hosts = {}
 		#for packet in tcp_packets:
 		#	seen_hosts[resolve_ip(packet[IP_LAYER].src)] = True
@@ -36,7 +37,15 @@ class WikipediaMetadataSniffer():
 		wiki_packets = filter(wiki_filter, tcp_packets)
 
 		conversations = {}
+		seen_packets = Set()
 		for packet in wiki_packets:
+			packet_signature = (packet['ip'].src, packet['tcp'].srcport, packet['ip'].dst, packet['tcp'].dstport, packet['tcp'].stream, packet['tcp'].seq)
+			
+			if packet_signature in seen_packets:
+				continue
+			else:
+				seen_packets.add(packet_signature)
+
 			if resolve_ip(packet[IP_LAYER].src) in conversations:
 				conversations[resolve_ip(packet[IP_LAYER].src)] += int(packet["tcp"].len)
 			else:
