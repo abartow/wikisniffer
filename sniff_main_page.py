@@ -16,6 +16,7 @@ def open_webbrowser_thread_target(url):
 	browser = subprocess.Popen(["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "--headless", "--disable-gpu", url], close_fds=True)
 	print "page loaded"
 
+
 def sniff_page(page_name):
 	print "Sniffing {}".format(page_name)
 	page_url = "https://en.wikipedia.org/wiki/{}".format(page_name)
